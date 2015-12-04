@@ -16,6 +16,11 @@ A bit more background, [from *The Trace*](http://www.thetrace.org/2015/11/black-
 
 > The FBI’s background check numbers come with caveats: As seen in the late February-early March 2014 bubble, many checks are for concealed carry permits, not actual gun sales. Kentucky runs a new check on each concealed carry license holder each month. And of course, the FBI’s numbers don’t include private gun sales, many of which do not require a background check. A forthcoming study conducted by Harvard researchers [found that roughly 40 percent](http://www.thetrace.org/2015/10/private-sale-loophole-background-check-harvard-research/) of respondents had acquired their most recent firearm without going through a background check. Despite those vagaries, the FBI’s NICS numbers are widely accepted as the best proxy for total gun sales in a given time period.
 
+## Additional Resources
+
+- [NICS Federal Firearms Licensee Manual](https://www.fbi.gov/about-us/cjis/nics/federal-firearms-licensees/ffl-manual), which details the history and rules of the background-check program.
+
+- [NICS Participation Map](https://www.fbi.gov/about-us/cjis/nics/general-information/participation-map), which "depicts each state's level of participation with the NICS."
 
 ## Run The Parser Yourself
 
