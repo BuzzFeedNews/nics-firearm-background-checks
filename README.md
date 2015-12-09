@@ -34,3 +34,7 @@ Then run either `make data/nics-firearm-background-checks.csv` *or* `python scri
 ## Questions / Feedback / Improvements
 
 File [an issue](issues), or email the repository's maintainer at jeremy.singer-vine@buzzfeed.com.
+
+## More from BuzzFeed News
+
+[Click here for a list of our open-sourced projects, data, and code](https://github.com/BuzzFeedNews/everything).
