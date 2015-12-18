@@ -1,2 +1,2 @@
 pandas>=0.17
-pdfplumber
+pdfplumber>=0.0.3

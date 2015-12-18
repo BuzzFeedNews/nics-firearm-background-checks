@@ -55,9 +55,9 @@ def parse_month(month_str):
     return d.strftime("%Y-%m")
 
 def parse_pdf(file_obj):
-    pdf = pdfplumber.load(file_obj, pandas=True)
-    rects = pdf.rects
-    chars = pdf.chars
+    pdf = pdfplumber.load(file_obj)
+    rects = pd.DataFrame(pdf.rects)
+    chars = pd.DataFrame(pdf.chars)
 
     # Find the leftmost side of the rectangles that appear on each page.
     rect_counts = rects["x0"].value_counts()
