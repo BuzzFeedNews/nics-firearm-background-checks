@@ -30,6 +30,12 @@ The authors of that *NYT* analysis [describe how they used the NICS data to esti
 
 - [NICS Participation Map](https://www.fbi.gov/about-us/cjis/nics/general-information/participation-map), which "depicts each state's level of participation with the NICS."
 
+## Charts
+
+![Monthly NICS Background Check Totals Since Nov. 1998](charts/total-checks-all.png)
+
+![NICS Background Check Totals — Past 36 Months](charts/total-checks-36-months.png)
+
 ## Run The Parser Yourself
 
 All the necessary code is open-source. If you'd like to run the parser yourself, you'll need:
