@@ -86,7 +86,7 @@ def parse_pdf(file_obj):
             (chars["top"] > 28)
         ]["text"]))
 
-        data = c.groupby("doctop").apply(parse_line)
+        data = c.groupby(c["doctop"].round()).apply(parse_line)
         return pd.DataFrame([ [ month ] + d for d in data ], columns=COLUMNS)
 
 
