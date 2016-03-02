@@ -8,6 +8,7 @@ COLUMNS = [
     "month",
     "state",
     "permit",
+    "permit_recheck",
     "handgun",
     "long_gun",
     "other",
@@ -54,6 +55,23 @@ def parse_month(month_str):
     d = datetime.datetime.strptime(month_str, "%B - %Y")
     return d.strftime("%Y-%m")
 
+def validate_data(checks):
+    try:
+        assert(len(checks) > 0)
+    except:
+        raise Exception("No data found.")
+
+    col_totals = checks.fillna(0).sum(axis=1)
+    literal_totals = checks["totals"].fillna(0)
+    try:
+        assert((col_totals != (literal_totals * 2)).sum() == 0)
+    except:
+        msg = """Totals don't match
+        col_totals: {0}
+        literal_totals: {1}
+        """.format(col_totals, literal_totals)
+        raise Exception(msg)
+
 def parse_pdf(file_obj):
     pdf = pdfplumber.load(file_obj)
     rects = pd.DataFrame(pdf.rects)
@@ -64,6 +82,7 @@ def parse_pdf(file_obj):
     edges = rect_counts[
         rect_counts == len(pdf.pages)
     ].sort_index().index
+    edges = ((pd.Series(edges) / 2).round() * 2).drop_duplicates()
 
     # Use these edges to create boundaries, defining fields.
     bounds = list(zip(edges, edges[1:]))
@@ -79,22 +98,23 @@ def parse_pdf(file_obj):
         c = chars[
             (chars["top"] >= DATA_START_TOP) &
             (chars["top"] < DATA_END_TOP)
-        ].sort_values([ "doctop", "x0" ])
+        ]
 
         month = parse_month("".join(chars[
             (chars["size"] == 14.183) &
             (chars["top"] > 28)
         ]["text"]))
 
-        data = c.groupby(c["doctop"].round()).apply(parse_line)
-        return pd.DataFrame([ [ month ] + d for d in data ], columns=COLUMNS)
-
+        data = c.groupby((c["doctop"] / 3).round()).apply(parse_line)
+        df = pd.DataFrame([ [ month ] + d for d in data ], columns=COLUMNS)
+        df.loc[(df["state"] == "llinois"), "state"] = "Illinois"
+        try: validate_data(df)
+        except: raise Exception("Invalid data for " + month)
+        return df
 
     checks = pd.concat([ parse_page_chars(chars[chars["pageid"] == p.pageid])
         for p in pdf.pages ]).reset_index(drop=True)
 
-    assert(len(checks) > 0)
-    assert((checks.fillna(0).sum(axis=1) != (checks["totals"] * 2)).sum() == 0)
     return checks
 
 if __name__ == "__main__":
