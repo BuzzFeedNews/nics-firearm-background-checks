@@ -2,6 +2,7 @@
 import pandas as pd
 import datetime
 import pdfplumber
+from pdfplumber.utils import within_bbox, collate_chars
 import sys, os
 
 COLUMNS = [
@@ -39,14 +40,8 @@ COLUMNS = [
 DATA_START_TOP = 80
 DATA_END_TOP = 474
 
-def get_between(chars, x0, x1):
-    return chars[
-        (chars["x0"] > x0) &
-        (chars["x1"] < x1)
-    ]
-
 def parse_field(text):
-    if text == "": return None
+    if text == None: return None
     if text[0] in "0123456789":
         return int(text.replace(",", ""))
     return text
@@ -61,63 +56,64 @@ def validate_data(checks):
     except:
         raise Exception("No data found.")
 
-    col_totals = checks.fillna(0).sum(axis=1)
-    literal_totals = checks["totals"].fillna(0)
-    try:
-        assert((col_totals != (literal_totals * 2)).sum() == 0)
-    except:
-        msg = """Totals don't match
-        col_totals: {0}
-        literal_totals: {1}
-        """.format(col_totals, literal_totals)
-        raise Exception(msg)
+    ## Test vertical totals
+    # [2:] because first two columns are month and state name
+    for c in COLUMNS[2:]:
+        v_total = checks[c].iloc[-1]
+        v_colsum = checks[c].sum()
+        try:
+            assert(v_colsum == (v_total * 2))
+        except:
+            raise Exception("Vertical totals don't match on {0}.".format(c))
+
+    ## Test horizontal totals
+    h_colsums = checks.fillna(0).sum(axis=1)
+    h_totals = checks["totals"].fillna(0)
+    zipped = zip(checks["state"], h_colsums, h_totals)
+    for state, h_colsum, h_total in zipped:
+        try:
+            assert(h_colsum == (h_total * 2))
+        except:
+            raise Exception("Horizontal totals don't match on {0}.".format(state))
+
+def parse_value(x):
+    if pd.isnull(x): return None
+    return int(x.replace(",", ""))
+
+def parse_page(page):
+
+    month_crop = page.crop((0, 35, page.width, 65), strict=True)
+    month_text = month_crop.collate_chars(x_tolerance=2)
+    month = parse_month(month_text)
+    sys.stderr.write("\r" + month)
+
+    table_crop = page.crop((0, 80, page.width, 485))
+    _table = table_crop.extract_table(h="gutters",
+        x_tolerance=5,
+        y_tolerance=5,
+        gutter_min_height=5)
+    
+    table = pd.DataFrame([ [ month ] + row for row in _table ])
+
+    table.columns = COLUMNS
+    table[table.columns[2:]] = table[table.columns[2:]].applymap(parse_value)
+
+    table.loc[(table["state"] == "llinois"), "state"] = "Illinois"
+    try: validate_data(table)
+    except: raise Exception("Invalid data for " + month)
+
+    return table
 
 def parse_pdf(file_obj):
     pdf = pdfplumber.load(file_obj)
-    rects = pd.DataFrame(pdf.rects)
-    chars = pd.DataFrame(pdf.chars)
 
-    # Find the leftmost side of the rectangles that appear on each page.
-    rect_counts = rects["x0"].value_counts()
-    edges = rect_counts[
-        rect_counts == len(pdf.pages)
-    ].sort_index().index
-    edges = ((pd.Series(edges) / 2).round() * 2).drop_duplicates()
+    checks = pd.concat(list(map(parse_page, pdf.pages)))\
+        .reset_index(drop=True)
 
-    # Use these edges to create boundaries, defining fields.
-    bounds = list(zip(edges, edges[1:]))
-
-    def parse_line(chars):
-        fields = [ "".join(get_between(chars, x0, x1)["text"])
-            for x0, x1 in bounds ]
-
-        parsed = list(map(parse_field, fields))
-        return parsed
-
-    def parse_page_chars(chars):
-        c = chars[
-            (chars["top"] >= DATA_START_TOP) &
-            (chars["top"] < DATA_END_TOP)
-        ]
-
-        month = parse_month("".join(chars[
-            (chars["size"] == 14.183) &
-            (chars["top"] > 28)
-        ]["text"]))
-
-        data = c.groupby((c["doctop"] / 3).round()).apply(parse_line)
-        df = pd.DataFrame([ [ month ] + d for d in data ], columns=COLUMNS)
-        df.loc[(df["state"] == "llinois"), "state"] = "Illinois"
-        try: validate_data(df)
-        except: raise Exception("Invalid data for " + month)
-        return df
-
-    checks = pd.concat([ parse_page_chars(chars[chars["pageid"] == p.pageid])
-        for p in pdf.pages ]).reset_index(drop=True)
-
-    return checks
+    return checks[checks["state"] != "Totals"]
 
 if __name__ == "__main__":
     buf = getattr(sys.stdin, 'buffer', sys.stdin)
     checks = parse_pdf(buf)
     checks.to_csv(sys.stdout, index=False, float_format="%.0f")
+    sys.stderr.write("\r\n")
