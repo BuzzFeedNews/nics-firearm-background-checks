@@ -83,7 +83,7 @@ def parse_value(x):
 def parse_page(page):
 
     month_crop = page.crop((0, 35, page.width, 65), strict=True)
-    month_text = month_crop.collate_chars(x_tolerance=2)
+    month_text = month_crop.extract_text(x_tolerance=2)
     month = parse_month(month_text)
     sys.stderr.write("\r" + month)
 
