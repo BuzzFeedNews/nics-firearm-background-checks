@@ -1,2 +1,4 @@
 pandas>=0.17
-pdfplumber>=0.3.0
+pdfplumber>=0.4.3
+seaborn
+requests
