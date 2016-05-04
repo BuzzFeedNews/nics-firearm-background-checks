@@ -7,13 +7,9 @@ import re
 from io import BytesIO
 
 def parse_date(pdf):
-    chars = pd.DataFrame(pdf.chars)
-    updated_text = "".join(chars[
-        (chars["fontname"] == "Times New Roman") &
-        (chars["doctop"] < 175)
-    ].sort_values(["doctop", "x0"])["text"])
-    date_pat = r"UPDATED:\s+As of (.+)$"
-    updated_date = re.search(date_pat, updated_text).group(1)
+    text = pdf.pages[0].extract_text(x_tolerance=5)
+    date_pat = r"UPDATED:\s+As of (.+)\n"
+    updated_date = re.search(date_pat, text).group(1)
     d = datetime.datetime.strptime(updated_date, "%B %d, %Y")
     return d
 
