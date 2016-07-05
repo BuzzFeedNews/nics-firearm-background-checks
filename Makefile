@@ -13,3 +13,5 @@ data/nics-firearm-background-checks.csv: now
 charts: now
 	python scripts/chart-total-checks-36-months.py < data/nics-firearm-background-checks.csv > charts/total-checks-36-months.png
 	python scripts/chart-total-checks-all.py < data/nics-firearm-background-checks.csv > charts/total-checks-all.png
+
+all: pdfs/nics_firearm_checks_-_month_year_by_state_type.pdf data/nics-firearm-background-checks.csv charts
