@@ -3,6 +3,7 @@ import pandas as pd
 import datetime
 import pdfplumber
 from pdfplumber.utils import within_bbox, collate_chars
+from operator import itemgetter
 import sys, os
 
 COLUMNS = [
@@ -35,17 +36,6 @@ COLUMNS = [
     "totals"
 ]
 
-# Where, in pixels from the top,
-# the data starts and ends on each page.
-DATA_START_TOP = 80
-DATA_END_TOP = 474
-
-def parse_field(text):
-    if text == None: return None
-    if text[0] in "0123456789":
-        return int(text.replace(",", ""))
-    return text
-
 def parse_month(month_str):
     d = datetime.datetime.strptime(month_str, "%B - %Y")
     return d.strftime("%Y-%m")
@@ -77,22 +67,25 @@ def validate_data(checks):
             raise Exception("Horizontal totals don't match on {0}.".format(state))
 
 def parse_value(x):
-    if pd.isnull(x): return None
+    if pd.isnull(x) or x == "": return None
     return int(x.replace(",", ""))
 
 def parse_page(page):
-
-    month_crop = page.crop((0, 35, page.width, 65), strict=True)
+    month_crop = page.within_bbox((0, 35, page.width, 65))
     month_text = month_crop.extract_text(x_tolerance=2)
     month = parse_month(month_text)
     sys.stderr.write("\r" + month)
 
     table_crop = page.crop((0, 80, page.width, 485))
-    _table = table_crop.extract_table(h="gutters",
-        x_tolerance=5,
-        y_tolerance=5,
-        gutter_min_height=5)
-    
+
+    _table = table_crop.extract_table({
+        "horizontal_strategy": "text",
+        "explicit_vertical_lines": [
+            min(map(itemgetter("x0"), table_crop.chars))
+        ],
+        "intersection_tolerance": 5
+    })
+
     table = pd.DataFrame([ [ month ] + row for row in _table ])
 
     table.columns = COLUMNS
