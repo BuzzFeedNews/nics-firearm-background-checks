@@ -14,7 +14,7 @@ def parse_date(pdf):
     return d
 
 if __name__ == "__main__":
-    URL = "https://www.fbi.gov/about-us/cjis/nics/reports/active_records_in_the_nics-index.pdf"
+    URL = "https://www.fbi.gov/file-repository/active_records_in_the_nics-index.pdf"
     raw = requests.get(URL).content
     pdf = pdfplumber.load(BytesIO(raw))
     d = parse_date(pdf)
