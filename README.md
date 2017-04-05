@@ -43,7 +43,7 @@ All the necessary code is open-source. If you'd like to run the parser yourself,
 - Python 2.7+ or Python 3.x
 - The libraries listed in [`requirements.txt`](requirements.txt)
 
-Then run either `make data/nics-firearm-background-checks.csv` *or* `python scripts/parse-pdf.py < pdfs/nics_firearm_checks_-_month_year_by_state_type.pdf > data/nics-firearm-background-checks.csv`.
+Then run `make all`. (See the [`Makefile`](Makefile) to view the individual commands.)
 
 ## Questions / Feedback / Improvements
 
