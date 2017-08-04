@@ -26,9 +26,9 @@ The authors of that *NYT* analysis [describe how they used the NICS data to esti
 
 ## Additional Resources
 
-- [NICS Federal Firearms Licensee Manual](https://www.fbi.gov/about-us/cjis/nics/federal-firearms-licensees/ffl-manual), which details the history and rules of the background-check program.
+- [NICS Federal Firearms Licensee Manual](https://www.fbi.gov/file-repository/nics-firearms-licensee-manual-111811.pdf/view), which details the history and rules of the background-check program.
 
-- [NICS Participation Map](https://www.fbi.gov/about-us/cjis/nics/general-information/participation-map), which "depicts each state's level of participation with the NICS."
+- [NICS Participation Map](https://www.fbi.gov/file-repository/nics-participation-map.pdf/view), which "depicts each state's level of participation with the NICS."
 
 ## Charts
 
