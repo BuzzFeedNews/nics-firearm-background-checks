@@ -1,0 +1,17 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+pandas = ">=0.17"
+pdfplumber = "==0.5.7"
+seaborn = "*"
+requests = "*"
+
+
+[dev-packages]
+
