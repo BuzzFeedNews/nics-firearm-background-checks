@@ -1,7 +1,9 @@
 #!/usr/bin/env python
-import pandas as pd
-import seaborn as sb
 import sys, os
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sb
+sb.set()
 
 checks = pd.read_csv(sys.stdin)
 
@@ -21,7 +23,8 @@ ax.set_title("NICS Background Check Totals — Past 36 Months", fontsize=24)
 ax.set_yticklabels([ "{0:,.0f}".format(y) for y in ax.get_yticks() ], fontsize=12)
 ax.set_xticks(tick_placement)
 ax.set_xticklabels([ totals.index[i] for i in tick_placement ])
-sb.mpl.pyplot.setp(ax.get_xticklabels(), rotation=0, fontsize=12)
+ax.set_xlim(0, len(totals) - 1)
+plt.setp(ax.get_xticklabels(), rotation=0, fontsize=12)
 ax.set_xlabel("")
 
-sb.plt.savefig(sys.stdout)
+plt.savefig(sys.stdout.buffer)
