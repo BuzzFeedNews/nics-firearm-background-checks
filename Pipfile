@@ -11,6 +11,7 @@ pandas = ">=0.17"
 pdfplumber = "==0.5.7"
 seaborn = "*"
 requests = "*"
+urllib3 = ">=1.24.2"
 
 
 [dev-packages]
