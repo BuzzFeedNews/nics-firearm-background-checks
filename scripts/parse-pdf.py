@@ -76,14 +76,18 @@ def parse_page(page):
     month = parse_month(month_text)
     sys.stderr.write("\r" + month)
 
-    table_crop = page.crop((0, 80, page.width, 485))
+    table_crop = page.crop((0, 73, page.width, 495))
+
+    edge_xs = list(set(map(itemgetter("x0"), table_crop.edges)))
+    leftmost_char = min(map(itemgetter("x0"), table_crop.chars)) 
 
     _table = table_crop.extract_table({
         "horizontal_strategy": "text",
-        "explicit_vertical_lines": [
-            min(map(itemgetter("x0"), table_crop.chars))
-        ],
-        "intersection_tolerance": 5
+        "vertical_strategy": "explicit",
+        "explicit_vertical_lines": [ leftmost_char ] + edge_xs,
+        "intersection_tolerance": 5,
+        "text_y_tolerance": 2,
+        "text_x_tolerance": 2,
     })
 
     table = pd.DataFrame([ [ month ] + row for row in _table ])
@@ -100,8 +104,9 @@ def parse_page(page):
 def parse_pdf(file_obj):
     pdf = pdfplumber.load(file_obj)
 
-    checks = pd.concat(list(map(parse_page, pdf.pages)))\
-        .reset_index(drop=True)
+    # Note: As of Nov. 2019 file, first page is documentation
+    checks_gen = map(parse_page, pdf.pages[1:])
+    checks = pd.concat(checks_gen).reset_index(drop=True)
 
     return checks[checks["state"] != "Totals"]
 
