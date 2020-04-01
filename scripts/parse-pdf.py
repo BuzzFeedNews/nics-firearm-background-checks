@@ -71,7 +71,7 @@ def parse_value(x):
     return int(x.replace(",", ""))
 
 def parse_page(page):
-    month_crop = page.within_bbox((0, 35, page.width, 65))
+    month_crop = page.within_bbox((0, 35, page.width, 55))
     month_text = month_crop.extract_text(x_tolerance=2)
     month = parse_month(month_text)
     sys.stderr.write("\r" + month)
