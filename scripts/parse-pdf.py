@@ -71,12 +71,12 @@ def parse_value(x):
     return int(x.replace(",", ""))
 
 def parse_page(page):
-    month_crop = page.within_bbox((0, 35, page.width, 55))
+    month_crop = page.within_bbox((0, 36, page.width, 58))
     month_text = month_crop.extract_text(x_tolerance=2)
     month = parse_month(month_text)
     sys.stderr.write("\r" + month)
 
-    table_crop = page.crop((0, 73, page.width, 495))
+    table_crop = page.crop((0, 73, page.width, 500))
 
     edge_xs = list(set(map(itemgetter("x0"), table_crop.edges)))
     leftmost_char = min(map(itemgetter("x0"), table_crop.chars)) 
