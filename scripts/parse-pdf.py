@@ -96,6 +96,7 @@ def parse_page(page):
     table[table.columns[2:]] = table[table.columns[2:]].applymap(parse_value)
 
     table.loc[(table["state"] == "llinois"), "state"] = "Illinois"
+    table = table.loc[lambda df: df["state"].fillna("").str.strip() != ""]
     try: validate_data(table)
     except: raise Exception("Invalid data for " + month)
 
