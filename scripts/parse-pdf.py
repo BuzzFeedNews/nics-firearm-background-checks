@@ -102,9 +102,7 @@ def parse_page(page):
 
     return table
 
-def parse_pdf(file_obj):
-    pdf = pdfplumber.load(file_obj)
-
+def parse_pdf(pdf):
     # Note: As of Nov. 2019 file, first page is documentation
     checks_gen = map(parse_page, pdf.pages[1:])
     checks = pd.concat(checks_gen).reset_index(drop=True)
@@ -112,7 +110,9 @@ def parse_pdf(file_obj):
     return checks[checks["state"] != "Totals"]
 
 if __name__ == "__main__":
-    buf = getattr(sys.stdin, 'buffer', sys.stdin)
-    checks = parse_pdf(buf)
+    with pdfplumber.open(sys.stdin.buffer) as pdf:
+        checks = parse_pdf(pdf)
+
     checks.to_csv(sys.stdout, index=False, float_format="%.0f")
+
     sys.stderr.write("\r\n")
