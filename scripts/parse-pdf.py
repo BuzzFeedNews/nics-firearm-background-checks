@@ -2,7 +2,7 @@
 import pandas as pd
 import datetime
 import pdfplumber
-from pdfplumber.utils import within_bbox, collate_chars
+from pdfplumber.utils import within_bbox, extract_text
 from operator import itemgetter
 import sys, os
 
@@ -71,12 +71,17 @@ def parse_value(x):
     return int(x.replace(",", ""))
 
 def parse_page(page):
-    month_crop = page.within_bbox((0, 36, page.width, 58))
-    month_text = month_crop.extract_text(x_tolerance=2)
+    month_chars = [ c for c in page.chars if c["non_stroking_color"] == (1, 0, 0) ]
+    month_text = extract_text(month_chars, x_tolerance=2)
     month = parse_month(month_text)
     sys.stderr.write("\r" + month)
 
-    table_crop = page.crop((0, 73, page.width, 500))
+    table_crop = page.crop((
+        0,
+        [ w for w in page.extract_words() if w["text"] == "State" ][0]["bottom"],
+        page.width,
+        page.rects[-1]["bottom"],
+    ))
 
     edge_xs = list(set(map(itemgetter("x0"), table_crop.edges)))
     leftmost_char = min(map(itemgetter("x0"), table_crop.chars)) 
@@ -86,7 +91,7 @@ def parse_page(page):
         "vertical_strategy": "explicit",
         "explicit_vertical_lines": [ leftmost_char ] + edge_xs,
         "intersection_tolerance": 5,
-        "text_y_tolerance": 2,
+        "text_y_tolerance": 0,
         "text_x_tolerance": 2,
     })
 
