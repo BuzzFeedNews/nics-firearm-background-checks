@@ -18,5 +18,5 @@ scipy==1.6.1
 seaborn==0.11.1
 six==1.15.0
 sortedcontainers==2.3.0
-urllib3==1.26.4
+urllib3==1.26.5
 Wand==0.6.6
