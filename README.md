@@ -10,7 +10,7 @@ The FBI provides data on the number of firearm checks by month, state, and type 
 
 The original PDF contains important notes and caveats. It's a good idea to read those first before diving into the data. Among the caveats is this important one — emphasis added:
 
-> These statistics represent the number of firearm background checks initiated through the NICS They do not represent the number of firearms sold Based on varying state laws and purchase scenarios, __a one-to-one correlation cannot be made between a firearm background check and a firearm sale__
+> These statistics represent the number of firearm background checks initiated through the NICS. They do not represent the number of firearms sold. Based on varying state laws and purchase scenarios, __a one-to-one correlation cannot be made between a firearm background check and a firearm sale__.
 
 A bit more background, [from *The Trace* in 2017](https://www.thetrace.org/2017/01/gun-background-check-private-sale-loophole/):
 
