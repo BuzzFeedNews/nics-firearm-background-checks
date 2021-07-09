@@ -12,9 +12,9 @@ The original PDF contains important notes and caveats. It's a good idea to read 
 
 > These statistics represent the number of firearm background checks initiated through the NICS They do not represent the number of firearms sold Based on varying state laws and purchase scenarios, __a one-to-one correlation cannot be made between a firearm background check and a firearm sale__
 
-A bit more background, [from *The Trace*](http://www.thetrace.org/2015/11/black-friday-gun-sales-background-checks/):
+A bit more background, [from *The Trace* in 2017](https://www.thetrace.org/2017/01/gun-background-check-private-sale-loophole/):
 
-> The FBI’s background check numbers come with caveats: As seen in the late February-early March 2014 bubble, many checks are for concealed carry permits, not actual gun sales. Kentucky runs a new check on each concealed carry license holder each month. And of course, the FBI’s numbers don’t include private gun sales, many of which do not require a background check. A forthcoming study conducted by Harvard researchers [found that roughly 40 percent](http://www.thetrace.org/2015/10/private-sale-loophole-background-check-harvard-research/) of respondents had acquired their most recent firearm without going through a background check. Despite those vagaries, the FBI’s NICS numbers are widely accepted as the best proxy for total gun sales in a given time period.
+> The share of Americans obtaining a gun without first undergoing a background check is dramatically lower than previous estimates, researchers have determined... Just 22 percent of \[1613\] current gun owners who acquired a firearm within the \[previous\] two years \[2013-2015\] reported doing so without a background check, according to a new [national survey](https://pubmed.ncbi.nlm.nih.gov/28055050/) by public health researchers at Harvard and Northeastern Universities.
 
 Not all categories of background checks may be equally useful/pertinent to your research. When *The New York Times* [analyzed NICS data in Dec. 2015](http://www.nytimes.com/interactive/2015/12/10/us/gun-sales-terrorism-obama-restrictions.html), it included this methodological note:
 
@@ -29,6 +29,8 @@ The authors of that *NYT* analysis [describe how they used the NICS data to esti
 - [NICS Federal Firearms Licensee Manual](https://www.fbi.gov/file-repository/nics-firearms-licensee-manual-111811.pdf/view), which details the history and rules of the background-check program.
 
 - [NICS Participation Map](https://www.fbi.gov/file-repository/nics-participation-map.pdf/view), which "depicts each state's level of participation with the NICS."
+
+- [Understanding NSSF-Adjusted NICS](https://www.nssf.org/articles/understanding-nssf-adjusted-nics-and-the-underlying-reason-gun-sales-remain-strong/) "The adjusted NICS data presented above was derived by NSSF by subtracting out NICS purpose code permit checks used by several states such as KY and UT for CCW permit application checks as well as checks on active CCW permit databases.  While not a direct correlation to firearms sales, the NSSF adjusted NICS data provides a more accurate picture of current market conditions.  Questions concerning NSSF adjusted NICS data should be directed to NSSF research at (203) 426-1320 or research@NSSF.org."
 
 ## Charts
 
