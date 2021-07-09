@@ -24,6 +24,10 @@ The authors of that *NYT* analysis [describe how they used the NICS data to esti
 
 > To convert background checks into estimated sales, we relied on a method suggested in the [Small Arms Survey](http://www.smallarmssurvey.org/fileadmin/docs/F-Working-papers/SAS-WP14-US-Firearms-Industry.pdf) by Jurgen Brauer, a professor at Georgia Regents University. Each long gun and handgun check was counted as 1.1 sales. Each multiple-gun check was counted as two sales. Permit checks and other types of checks were omitted. The multiplier is an estimate based on Mr. Brauer's interviews with gun shop owners.
 
+- [NSSF](https://www.nssf.org) [describes](https://www.nssf.org/articles/gun-control-group-tracking-nics-checks-badly/) its methodology:
+
+> NSSF’s adjustments are derived by subtracting out NICS purpose code permit checks and permit rechecks used by states for concealed carry permit application checks as well as checks on active concealed carry permit databases... Twenty-five states currently have at least one qualified alternative permit... The number of NICS checks in these states does not include these legal transfers based on qualifying permits and NSSF does not adjust for these transfers.
+
 ## Additional Resources
 
 - [NICS Federal Firearms Licensee Manual](https://www.fbi.gov/file-repository/nics-firearms-licensee-manual-111811.pdf/view), which details the history and rules of the background-check program.
