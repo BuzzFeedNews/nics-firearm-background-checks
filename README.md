@@ -30,8 +30,6 @@ The authors of that *NYT* analysis [describe how they used the NICS data to esti
 
 - [NICS Participation Map](https://www.fbi.gov/file-repository/nics-participation-map.pdf/view), which "depicts each state's level of participation with the NICS."
 
-- [Understanding NSSF-Adjusted NICS](https://www.nssf.org/articles/understanding-nssf-adjusted-nics-and-the-underlying-reason-gun-sales-remain-strong/) "The adjusted NICS data presented above was derived by NSSF by subtracting out NICS purpose code permit checks used by several states such as KY and UT for CCW permit application checks as well as checks on active CCW permit databases.  While not a direct correlation to firearms sales, the NSSF adjusted NICS data provides a more accurate picture of current market conditions.  Questions concerning NSSF adjusted NICS data should be directed to NSSF research at (203) 426-1320 or research@NSSF.org."
-
 ## Charts
 
 ![Monthly NICS Background Check Totals Since Nov. 1998](charts/total-checks-all.png)
