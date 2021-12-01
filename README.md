@@ -42,7 +42,7 @@ The authors of that *NYT* analysis [describe how they used the NICS data to esti
 
 All the necessary code is open-source. If you'd like to run the parser yourself, you'll need:
 
-- Python 2.7+ or Python 3.x
+- Python 3.x
 - The libraries listed in [`requirements.txt`](requirements.txt)
 
 Then run `make all`. (See the [`Makefile`](Makefile) to view the individual commands.)
