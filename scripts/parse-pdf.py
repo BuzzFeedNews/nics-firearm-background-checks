@@ -72,6 +72,9 @@ def parse_value(x):
 
 def parse_page(page):
     month_chars = [ c for c in page.chars if c["non_stroking_color"] == (1, 0, 0) ]
+    if len(month_chars) == 0:
+        return None
+
     month_text = extract_text(month_chars, x_tolerance=2)
     month = parse_month(month_text)
     sys.stderr.write("\r" + month)
@@ -108,9 +111,8 @@ def parse_page(page):
     return table
 
 def parse_pdf(pdf):
-    # Note: As of Nov. 2019 file, first page is documentation
-    checks_gen = map(parse_page, pdf.pages[1:])
-    checks = pd.concat(checks_gen).reset_index(drop=True)
+    checks_dfs = [ df for df in map(parse_page, pdf.pages) if df is not None ]
+    checks = pd.concat(checks_dfs).reset_index(drop=True)
 
     return checks[checks["state"] != "Totals"]
 
