@@ -57,7 +57,7 @@ def validate_data(checks):
             raise Exception("Vertical totals don't match on {0}.".format(c))
 
     ## Test horizontal totals
-    h_colsums = checks.fillna(0).sum(axis=1)
+    h_colsums = checks.sum(axis=1, numeric_only=True)
     h_totals = checks["totals"].fillna(0)
     zipped = zip(checks["state"], h_colsums, h_totals)
     for state, h_colsum, h_total in zipped:
