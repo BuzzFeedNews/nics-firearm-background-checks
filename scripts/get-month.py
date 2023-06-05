@@ -1,10 +1,11 @@
 #!/usr/bin/env python
-import pandas as pd
-import pdfplumber
-import requests
 import datetime
 import re
 from io import BytesIO
+
+import pdfplumber
+import requests
+
 
 def parse_date(pdf):
     text = pdf.pages[0].extract_text(x_tolerance=5)
@@ -12,6 +13,7 @@ def parse_date(pdf):
     updated_date = re.search(date_pat, text).group(1)
     d = datetime.datetime.strptime(updated_date, "%B %d, %Y")
     return d
+
 
 if __name__ == "__main__":
     URL = "https://www.fbi.gov/file-repository/active_records_in_the_nics-index.pdf"
