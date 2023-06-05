@@ -15,3 +15,12 @@ charts: now
 	python scripts/chart-total-checks-all.py < data/nics-firearm-background-checks.csv > charts/total-checks-all.png
 
 all: pdfs/nics_firearm_checks_-_month_year_by_state_type.pdf data/nics-firearm-background-checks.csv charts
+
+format:
+	black scripts
+	isort scripts --profile black
+
+lint:
+	black --check scripts
+	isort --check scripts --profile black
+	flake8 scripts --max-line-length 88
