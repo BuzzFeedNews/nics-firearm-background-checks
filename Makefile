@@ -1,20 +1,31 @@
 default:
 
-.PHONY: now
+.PHONY: now all update
 now:
 	@date
 
-pdfs/nics_firearm_checks_-_month_year_by_state_type.pdf: now
+all: pdfs/nics-checks-archive.pdf data/partial/nics-checks-archive.csv pdfs/nics-checks-last-five-years.pdf data/partial/nics-checks-last-five-years.csv data/nics-firearm-background-checks.csv charts
+
+update: pdfs/nics-checks-last-five-years.pdf data/partial/nics-checks-last-five-years.csv data/nics-firearm-background-checks.csv charts
+
+pdfs/nics-checks-archive.pdf: now
 	curl -s "https://www.fbi.gov/file-repository/nics_firearm_checks_-_month_year_by_state_type.pdf" > $@
 
+pdfs/nics-checks-last-five-years.pdf: now
+	curl -s "https://www.fbi.gov/file-repository/nics_firearms_checks_-_month_year_by_state_type-last-5-years-1.pdf" > $@
+
+data/partial/nics-checks-archive.csv: now
+	python scripts/parse-pdf.py pdfs/nics-checks-archive.pdf > $@
+
+data/partial/nics-checks-last-five-years.csv: now
+	python scripts/parse-pdf.py pdfs/nics-checks-last-five-years.pdf > $@
+
 data/nics-firearm-background-checks.csv: now
-	python scripts/parse-pdf.py pdfs/nics_firearm_checks_-_month_year_by_state_type.pdf > $@
+	python scripts/combine-partials.py
 
 charts: now
 	python scripts/chart-total-checks-36-months.py < data/nics-firearm-background-checks.csv > charts/total-checks-36-months.png
 	python scripts/chart-total-checks-all.py < data/nics-firearm-background-checks.csv > charts/total-checks-all.png
-
-all: pdfs/nics_firearm_checks_-_month_year_by_state_type.pdf data/nics-firearm-background-checks.csv charts
 
 format:
 	black scripts
