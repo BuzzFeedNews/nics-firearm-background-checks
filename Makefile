@@ -9,10 +9,10 @@ all: pdfs/nics-checks-archive.pdf data/partial/nics-checks-archive.csv pdfs/nics
 update: pdfs/nics-checks-last-five-years.pdf data/partial/nics-checks-last-five-years.csv data/nics-firearm-background-checks.csv charts
 
 pdfs/nics-checks-archive.pdf: now
-	curl -s "https://www.fbi.gov/file-repository/nics_firearm_checks_-_month_year_by_state_type.pdf" > $@
+	wget "https://www.fbi.gov/file-repository/nics_firearms_checks_-_month_year_by_state_type-archive.pdf" -O $@
 
 pdfs/nics-checks-last-five-years.pdf: now
-	curl -s "https://www.fbi.gov/file-repository/nics_firearms_checks_-_month_year_by_state_type-last-5-years-1.pdf" > $@
+	wget "https://www.fbi.gov/file-repository/nics_firearms_checks_-_month_year_by_state_type-last-5-years-1.pdf" -O $@
 
 data/partial/nics-checks-archive.csv: now
 	python scripts/parse-pdf.py pdfs/nics-checks-archive.pdf > $@
